@@ -7,7 +7,7 @@ import * as TaskActions from './task.actions';
 import { Store } from '@ngrx/store';
 import { selectedTaskGroups } from './task.selectors';
 import { selectedTaskGroups as selectedProjectTaskGroup } from '../../project/store/project.selectors';
-import { TaskService } from 'src/app/service';
+import { AssignUserService, TaskService } from 'src/app/service';
 import { selectedActiveProject, selectedProject } from '../../project/store/project.selectors';
 import {setSelectProject, setTaskGroups} from '../../project/store/project.actions'
 @Injectable()
@@ -174,9 +174,12 @@ export class TaskEffects {
       )
   )
 
+  
+
   constructor(
     private actions$: Actions,
     private store:Store,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private assignUserService: AssignUserService
   ) {}
 }

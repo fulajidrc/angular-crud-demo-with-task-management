@@ -31,8 +31,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MatirialModule,
-    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forFeature([UserEffects])
+    // StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+    // EffectsModule.forFeature([UserEffects])
   ]
 })
 export class UserModule { }

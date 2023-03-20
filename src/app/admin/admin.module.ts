@@ -19,6 +19,8 @@ import { ProjectEffects } from './project/store/project.effects';
 import * as fromProject from './project/store/project.reducer';
 import { TaskEffects } from './task/store/task.effects';
 import * as fromTask from './task/store/task.reducer';
+import { UserEffects } from './user/store/user.effects';
+import * as fromUser from './user/store/user.reducer';
 const routes: Routes = [
   {
     path: '',
@@ -74,7 +76,8 @@ const routes: Routes = [
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
     StoreModule.forFeature(fromProject.projectFeatureKey, fromProject.reducer),
     StoreModule.forFeature(fromTask.taskFeatureKey, fromTask.reducer),
-    EffectsModule.forFeature([CategoryEffects, ProjectEffects, TaskEffects]),
+    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+    EffectsModule.forFeature([CategoryEffects, ProjectEffects, TaskEffects, UserEffects]),
 
     
     // EffectsModule.forFeature([TaskEffects]),

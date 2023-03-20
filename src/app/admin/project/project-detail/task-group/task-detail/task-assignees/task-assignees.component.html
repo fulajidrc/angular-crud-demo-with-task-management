@@ -6,8 +6,20 @@
         </div>
     </div>
     <div>
-        <mat-chip-listbox aria-label="User selection">
-            <mat-chip *ngFor="let user of users">
+
+
+        <mat-form-field appearance="fill" *ngIf="assignUser">
+            <mat-label>Assign To</mat-label>
+            <mat-select disableRipple  [(ngModel)]="user">
+              <mat-option *ngFor="let user of users$ | async" [value]="user._id">{{user.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="taskAssignToUser()" *ngIf="assignUser">Assign</button>
+
+
+
+        <mat-chip-listbox aria-label="User selection" *ngIf="!assignUser">
+            <mat-chip *ngFor="let user of task.assign_users">
               <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
               {{getUserName(user)}}
             </mat-chip>
