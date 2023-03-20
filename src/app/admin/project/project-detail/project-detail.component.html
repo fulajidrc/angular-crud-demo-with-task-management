@@ -1,0 +1,20 @@
+<!-- <mat-card style="margin-top: 10px;margin-bottom: 10px;" *ngIf="project">
+    <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="start start" >
+            <div fxLayout="row" fxLayoutAlign="start center" >
+                Name: {{project.title}}
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" >
+                Description: {{project.description}}
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card> -->
+
+<app-task-group 
+    style="margin-top: 10px;" 
+    *ngIf="taskGroups$ | async as taskGroups"  
+    [taskGroups]="taskGroups"
+    [project]="project"
+></app-task-group>

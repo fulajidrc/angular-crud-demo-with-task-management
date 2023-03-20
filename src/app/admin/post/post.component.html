@@ -1,0 +1,4 @@
+<router-outlet></router-outlet>
+<ng-container *ngIf="posts$ | async as posts">
+    <app-post-list [posts]="posts"></app-post-list>
+</ng-container>

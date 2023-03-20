@@ -1,0 +1,17 @@
+<!-- <button mat-button>{{project.title}}</button> -->
+<div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+    <div (click)="selectProject()" style="padding-right: 30px;cursor: pointer;" >{{project.title}}</div>
+    <div>
+        <div fxLayout="row" fxLayoutAlign="end center" >
+            <mat-icon style="cursor: pointer;" aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editProject()"></mat-icon>
+            <mat-icon style="cursor: pointer;" aria-hidden="false" aria-label="Example home icon" fontIcon="delete" (click)="deleteProject()"></mat-icon>
+
+            <!-- <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                <mat-icon>home</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                <mat-icon>home</mat-icon>
+              </button> -->
+        </div>
+    </div>
+</div>

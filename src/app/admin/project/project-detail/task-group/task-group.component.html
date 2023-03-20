@@ -1,0 +1,40 @@
+<div 
+    cdkDropList
+    cdkDropListGroup 
+    cdkDropListOrientation="horizontal" 
+    class="example-list" 
+    (cdkDropListDropped)="drop($event)" 
+    
+>
+    <div class="example-box" *ngFor="let taskGroup of listTaskGroups" cdkDrag style="cursor:default; height: 100%;">
+        <div fxLayout="column" fxLayoutAlign="start start" style="width: 100%;height: 100%;">
+            <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%;" >
+                <h2 style="cursor: move;">{{taskGroup.title}}</h2>
+                <div>
+                    <app-task-group-action [project]="project" [taskGroup]="taskGroup"></app-task-group-action>
+                    
+                </div>
+            </div>
+            <div style="width: 100%;">
+                <app-add-task [project]="project" [taskGroup]="taskGroup"></app-add-task>
+            </div>
+            <div
+                cdkDropList
+                #todoList="cdkDropList"
+                [cdkDropListData]="taskGroup.tasks"
+                class="task-list"
+                [id]="taskGroup._id ? taskGroup._id : '0'"
+                (cdkDropListDropped)="dropTask($event)" style="width: 100%;">
+                <app-task-detail  
+                    class="task-box" 
+                    *ngFor="let task of taskGroup.tasks" 
+                    cdkDrag 
+                    [id]="task._id" 
+                    [cdkDragData]="task" 
+                    [task]="task"
+                    style="cursor: pointer;"
+                ></app-task-detail>
+            </div>
+        </div>
+    </div>
+</div>

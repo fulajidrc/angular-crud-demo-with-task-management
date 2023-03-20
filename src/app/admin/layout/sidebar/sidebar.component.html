@@ -1,0 +1,24 @@
+<mat-sidenav-container class="example-sidenav-container"
+ style="height: 90vh;">
+    <mat-sidenav #snav [mode]="mobileQuery?.matches ? 'over' : 'side'"
+    [fixedInViewport]="mobileQuery?.matches" fixedTopGap="56" [(opened)]="opened">
+        <mat-nav-list>
+            <a mat-list-item [routerLink]="nav.route" *ngFor="let nav of fillerNav">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div style="padding: 5px;">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="nav.icon"></mat-icon>
+                    </div>
+                    <div>
+                        {{nav.name}}
+                    </div>
+                </div>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content style="padding: 10px;">
+
+        <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

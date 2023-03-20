@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height:95vh">
+    <mat-card class="example-card">
+        <mat-card-content>
+            <h2>Login</h2>
+            <form class="example-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Email</mat-label>
+                  <input matInput placeholder="Email" formControlName="email">
+                  <mat-error *ngIf="(form.email.touched || submitted) && form.email.errors?.required">
+                    Email is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="(form.email.touched || submitted) && form.email.errors?.email">
+                    Plese enter valid email!
+                  </mat-error>
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <mat-label>Password</mat-label>
+                  <input matInput type="password" placeholder="Password" formControlName="password">
+                  <mat-error *ngIf="(form.password.touched || submitted) && form.password.errors?.required">
+                    Password is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button type="submit" color="accent">Login</button>
+
+              </form>
+        </mat-card-content>
+    </mat-card>
+</div>

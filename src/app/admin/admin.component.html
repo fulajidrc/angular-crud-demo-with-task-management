@@ -1,0 +1,4 @@
+  <div class="example-container" [class.example-is-mobile]="mobileQueryData?.matches">
+    <app-header style="width: 100%" [opened]="opened" (toogleSidebarEvent)="toogleSidebarEvent($event)"></app-header>
+    <app-sidebar [mobileQuery]="mobileQueryData" [opened]="opened"></app-sidebar>
+  </div>

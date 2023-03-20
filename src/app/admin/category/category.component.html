@@ -1,0 +1,5 @@
+<router-outlet></router-outlet>
+<ng-container *ngIf="categories$ | async as categories">
+    <app-category-list [categories]="categories"></app-category-list>
+</ng-container>
+<!-- <app-category-list></app-category-list> -->

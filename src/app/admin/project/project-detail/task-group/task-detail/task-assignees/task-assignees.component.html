@@ -1,0 +1,16 @@
+<div fxLayout="column" fxLayoutAlign="start start" >
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+        <div>Assignee</div>
+        <div>
+            <mat-icon style="cursor: pointer;" (click)="assignToUser()" fontIcon="add" matTooltip="Assign Task"></mat-icon>
+        </div>
+    </div>
+    <div>
+        <mat-chip-listbox aria-label="User selection">
+            <mat-chip *ngFor="let user of users">
+              <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+              {{getUserName(user)}}
+            </mat-chip>
+        </mat-chip-listbox>
+    </div>
+</div>

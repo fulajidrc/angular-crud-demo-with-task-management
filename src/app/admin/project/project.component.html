@@ -1,0 +1,9 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" >
+    <app-project-dropdown></app-project-dropdown>
+    <app-task-group-button *ngIf="project$ | async as project" [project]="project"></app-task-group-button>
+    
+</div>
+
+<ng-container *ngIf="project$ | async as project">
+    <app-project-detail [project]="project"></app-project-detail>
+</ng-container>

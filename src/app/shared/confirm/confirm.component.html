@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  {{data.text}}
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick(false)">No</button>
+  <button mat-stroked-button color="warn" (click)="onNoClick(true)" cdkFocusInitial>Yes, delete</button>
+</div>
