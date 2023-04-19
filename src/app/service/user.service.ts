@@ -23,4 +23,15 @@ export class UserService {
     return this.http.delete<{data:User}>(`${this.apiUrl}/users/${id}`, environment.apiOption)
     .pipe(map(response => response.data))
   }
+
+  addUser(user:User):Observable<User>{
+    return this.http.post<{data:User}>(`${this.apiUrl}/users`,user, environment.apiOption)
+    .pipe(map(response => response.data))
+  }
+
+  updateUser(id:string, user:User){
+    return this.http.patch<{data:User}>(`${this.apiUrl}/users/${id}`,user, environment.apiOption)
+    .pipe(map(response => response.data))
+  }
+
 }

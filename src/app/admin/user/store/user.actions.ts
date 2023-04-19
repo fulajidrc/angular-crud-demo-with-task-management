@@ -27,7 +27,7 @@ export const setUser = createAction(
 )
 
 export const setPageUsers = createAction(
-  'SET_USERS',
+  'SET_PAGE_USERS',
   (users:User[], curruntPage:number, totalUsers:number) => ({users, curruntPage, totalUsers})
 );
 
@@ -35,4 +35,14 @@ export const setPageUsers = createAction(
 export const deleteUser = createAction(
   'DELETE_USER',
   (id: string) => ({id})
+)
+
+export const addUser = createAction(
+  'ADD_USER',
+  (user:User) => ({user})
+)
+
+export const updateUser = createAction(
+  'UPDATE_USER',
+  (id:string,user:User) => ({id,user})
 )

@@ -8,6 +8,7 @@ import { selectedUsers } from './user.selectors';
 import { AuthService, UserService } from 'src/app/service';
 import { setAuthUser } from 'src/app/auth/store/auth.actions';
 import { User } from './user.model';
+import { selectedAuthUser } from 'src/app/auth/store/auth.selectors';
 
 
 @Injectable()
@@ -70,6 +71,32 @@ export class UserEffects {
             return this.userService.deleteUser(action.id)
             .pipe(switchMap(user => of(
               UserActions.setUsers(usersFromStore.filter(item => item._id != action.id))
+            )))
+          })
+        )
+  )
+
+  addUser$ = createEffect(() => 
+        this.actions$.pipe(
+          ofType(UserActions.addUser),
+          withLatestFrom(this.store.select(selectedUsers), this.store.select(selectedAuthUser)),
+          switchMap(([action, usersFromStore, authData]) => {
+            return this.userService.addUser(authData?.role == 'admin' ? {...action.user, role: 'user', createdBy: authData._id} : {...action.user, role: 'admin'} )
+            .pipe(switchMap(user => of(
+              UserActions.setUsers([...usersFromStore, user])
+            )))
+          })
+        )
+  )
+
+  updateUser$ = createEffect(() => 
+        this.actions$.pipe(
+          ofType(UserActions.updateUser),
+          withLatestFrom(this.store.select(selectedUsers)),
+          switchMap(([action, usersFromStore]) => {
+            return this.userService.updateUser(action.id,action.user)
+            .pipe(switchMap(user => of(
+              UserActions.setUsers(usersFromStore.map(item => item._id == action.id ? user : item))
             )))
           })
         )

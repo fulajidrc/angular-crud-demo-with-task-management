@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>{{dTitle}}</h1>
+<div mat-dialog-content>
+ <form class="example-form"  [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name">
+        <mat-error *ngIf="(form.name.touched || submitted) && form.name.errors?.required">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="(form.email.touched || submitted) && form.email.errors?.required">
+            Email is <strong>required</strong>
+        </mat-error>
+
+        <mat-error *ngIf="(form.email.touched || submitted) && form.email.errors?.email">
+            Please enter valid email address!
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="example-full-width" *ngIf="!this.data._id">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="Password" formControlName="password" />
+        <mat-error *ngIf="(form.password.touched || submitted) && form.password.errors?.required">
+            Password is <strong>required</strong>
+        </mat-error>
+
+        <mat-error *ngIf="(form.password.touched || submitted) && form.password.errors?.invalidPassword">
+            Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase
+                                letter and 1 number
+        </mat-error>
+
+      </mat-form-field>
+
+
+
+      <mat-form-field class="example-full-width" *ngIf="!this.data._id">
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput placeholder="Confirm Password" formControlName="confirm_password" />
+        <mat-error *ngIf="(form.confirm_password.touched || submitted) && form.confirm_password.errors?.required">
+            Confirm Password is <strong>required</strong>
+        </mat-error>
+
+        <mat-error *ngIf="form.confirm_password.touched && form.confirm_password.errors?.passwordMismatch">
+            Passwords doesnot match
+        </mat-error>
+
+        
+      </mat-form-field>
+ </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="accent" cdkFocusInitial (click)="onSubmit()">{{dButtonText}}</button>
+  <button mat-button (click)="onNoClick()">Close</button>
+  
+</div>

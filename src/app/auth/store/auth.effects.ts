@@ -52,10 +52,13 @@ export class AuthEffects {
       ofType(AuthActions.logoutAction),
       switchMap( ()  => this.authService.logout()),
       mergeMap(() => of(
-        AuthActions.setAuthUser({_id: '', name: '', email: ''}),
+        AuthActions.setAuthUser({_id: '', name: '', email: '', role: ''}),
         AuthActions.setLoginUser(false)
       )),
-      tap(() => this.router.navigate(['/login']))
+      tap(() =>
+        location.href = 'login'
+        //this.router.navigate(['/login'])
+      )
     )
   )
 

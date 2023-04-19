@@ -28,9 +28,10 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
                     } else {
                         if(error.status == 401){
                             //this.store.dispatch(logoutAction())
-                            this.store.dispatch(setAuthUser({name: '', email: '', _id:''}));
+                            this.store.dispatch(setAuthUser({name: '', email: '', _id:'', role:''}));
                             this.store.dispatch(setLoginUser(false));
-                            this.router.navigate(['/login'])
+                            //this.router.navigate(['/login'])
+                            location.href = 'login'
                         }
                         if(error.status == 400 || error.status == 500 || error.status == 401 || error.status == 403){
                             console.log('error', error.error.message);

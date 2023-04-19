@@ -9,6 +9,9 @@ import * as fromUser from './store/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/user.effects';
 import { ViewUserComponent } from './view-user/view-user.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AddUserComponent } from './add-user/add-user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -25,12 +28,16 @@ const routes: Routes = [
   declarations: [
     UserComponent,
     UserListComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    AddUserComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MatirialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule
     // StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
     // EffectsModule.forFeature([UserEffects])
   ]

@@ -7,6 +7,8 @@ import { selectedUsers } from '../store/user.selectors';
 import { User } from '../store/user.model';
 import { deleteUser, setUser } from '../store/user.actions';
 import { Router } from '@angular/router';
+import { AddUserComponent } from '../add-user/add-user.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-list',
@@ -20,7 +22,7 @@ export class UserListComponent {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 }
-  displayedColumns: string[] = ['_id', 'name', 'email', 'action'];
+  displayedColumns: string[] = ['name', 'email', 'role','action'];
   dataSource!: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -28,7 +30,8 @@ export class UserListComponent {
 
   constructor(
     private store:Store,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource(this.users);
   }
@@ -54,5 +57,19 @@ export class UserListComponent {
 
   deleteUser(id:string){
     this.store.dispatch(deleteUser(id))
+  }
+
+  crateUserDialog(user:User){
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      data: user,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  getRoles(roles:string[]){
+
   }
 }

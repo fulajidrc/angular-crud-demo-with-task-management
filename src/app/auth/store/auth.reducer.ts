@@ -10,7 +10,7 @@ export interface AuthState {
 }
 
 export const initialState: AuthState = {
-  user: {name: 'test name', email: 'test email', _id: 'fsdfsfs'},
+  user: {name: 'test name', email: 'test email', _id: 'fsdfsfs', role: 'user'},
   isLogin: false
 };
 
