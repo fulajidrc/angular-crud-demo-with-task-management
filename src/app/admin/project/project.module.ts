@@ -25,9 +25,12 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TaskDetailDialogComponent } from './project-detail/task-group/task-detail/task-detail-dialog/task-detail-dialog.component';
 import { TaskAssigneesComponent } from './project-detail/task-group/task-detail/task-assignees/task-assignees.component';
 import { TaskDataComponent } from './project-detail/task-group/task-detail/task-data/task-data.component';
+import { TaskContentComponent } from './project-detail/task-group/task-detail/task-detail-dialog/task-content/task-content.component';
 
 const routes: Routes = [
-  {path: '', component: ProjectComponent}
+  {path: '', component: ProjectComponent},
+  {path: ':project_id', component: ProjectComponent},
+  {path: ':project_id/task/:id', component: ProjectComponent},
 ]
 
 
@@ -47,7 +50,8 @@ const routes: Routes = [
     TaskGroupDialogComponent,
     TaskDetailDialogComponent,
     TaskAssigneesComponent,
-    TaskDataComponent
+    TaskDataComponent,
+    TaskContentComponent
   ],
   imports: [
     CommonModule,

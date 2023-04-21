@@ -4,7 +4,7 @@ import { catchError, map, concatMap, withLatestFrom, switchMap, mergeMap } from 
 import { Observable, EMPTY, of } from 'rxjs';
 import * as UserActions from './user.actions';
 import { Store } from '@ngrx/store';
-import { selectedUsers } from './user.selectors';
+import { selectedAdminUsers, selectedUsers } from './user.selectors';
 import { AuthService, UserService } from 'src/app/service';
 import { setAuthUser } from 'src/app/auth/store/auth.actions';
 import { User } from './user.model';
@@ -13,6 +13,24 @@ import { selectedAuthUser } from 'src/app/auth/store/auth.selectors';
 
 @Injectable()
 export class UserEffects {
+  
+  loadAdminUsers$ = createEffect(() => {
+    return this.actions$.pipe( 
+      ofType(UserActions.loadAdminUsers),
+      withLatestFrom(this.store.select(selectedAdminUsers)),
+      switchMap(([action, adminUsersFromStore]) => {
+        if(adminUsersFromStore.length > 0){
+          return EMPTY
+        }else{
+          return this.userService.getAdminUser().pipe(
+            switchMap(users => of(
+              UserActions.setAdminUsers(users),
+            ))
+          );
+        }
+      }) 
+    );
+  });
 
   loadUsers$ = createEffect(() => {
     return this.actions$.pipe( 

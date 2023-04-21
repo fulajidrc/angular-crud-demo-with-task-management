@@ -2,6 +2,16 @@ import { createAction, props } from '@ngrx/store';
 import { TaskGroup } from '../../task/store/task-group.model';
 import { Task } from '../../task/store/task.model';
 import { Project } from './project.model';
+import { User } from 'src/app/auth/store/auth.model';
+
+// export const loadAdminUsers = createAction(
+//   'LOAD_ADMIN_USERS'
+// );
+
+// export const setAdminUsers = createAction(
+//   'SET_ADMIN_USERS',
+//   (users:User[]) => ({users})
+// )
 
 export const loadProjects = createAction(
   '[Project] Load Projects'
@@ -50,6 +60,11 @@ export const addTaskAction = createAction(
 export const sortTaskGroupAction = createAction(
   'SORT_TASK_GROUP_ACTION',
   (taskGroups: TaskGroup[]) => ({taskGroups})
+)
+
+export const getProjectById = createAction(
+  'GET_PROJECT_BY_ID',
+  (id:string) => ({id})
 )
 
 

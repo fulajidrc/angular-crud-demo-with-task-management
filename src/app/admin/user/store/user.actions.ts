@@ -1,6 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from './user.model';
 
+
+export const loadAdminUsers = createAction(
+  'LOAD_ADMIN_USERS'
+);
+
+export const setAdminUsers = createAction(
+  'SET_ADMIN_USERS',
+  (users:User[]) => ({users})
+)
+
 export const loadUsers = createAction(
   '[User] Load Users'
 );

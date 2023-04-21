@@ -14,6 +14,11 @@ export class UserService {
     private http:HttpClient
   ) { }
 
+  getAdminUser():Observable<User[]>{
+    return this.http.get<{data:User[]}>(`${this.apiUrl}/users/admin-users`, environment.apiOption)
+    .pipe(map(response => response.data));
+  }
+
   getUsers():Observable<User[]>{
     return this.http.get<{data:User[]}>(`${this.apiUrl}/users`, environment.apiOption)
     .pipe(map(response => response.data));

@@ -1,4 +1,7 @@
   <div class="example-container" [class.example-is-mobile]="mobileQueryData?.matches">
-    <app-header style="width: 100%" [opened]="opened" (toogleSidebarEvent)="toogleSidebarEvent($event)"></app-header>
-    <app-sidebar [mobileQuery]="mobileQueryData" [opened]="opened"></app-sidebar>
+    <ng-container *ngIf="user$ | async as user">
+      <app-header style="width: 100%" [opened]="opened" (toogleSidebarEvent)="toogleSidebarEvent($event)" [user]="user"></app-header>
+      <app-sidebar [mobileQuery]="mobileQueryData" [opened]="opened" [user]="user"></app-sidebar>
+    </ng-container>
+    
   </div>

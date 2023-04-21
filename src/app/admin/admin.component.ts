@@ -2,6 +2,9 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { logoutAction } from '../auth/store/auth.actions';
+import { selectedAuthUser } from '../auth/store/auth.selectors';
+import { User } from '../auth/store/auth.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +14,7 @@ import { logoutAction } from '../auth/store/auth.actions';
 export class AdminComponent {
   mobileQueryData?: MediaQueryList;
   opened = true
-
+  user$= this.store.select(selectedAuthUser)
   toogleSidebarEvent(status:boolean){
     this.opened = status;
   }

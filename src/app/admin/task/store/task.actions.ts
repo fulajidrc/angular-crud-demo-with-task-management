@@ -65,6 +65,21 @@ export const assignUserToTask = createAction(
   (assignUser:AssignUser) => ({assignUser})
 )
 
+export const unAssignUserToTask = createAction(
+  'UNASSIGN_USER_TO_TASK',
+  (id:string) => ({id})
+)
+
+export const setActiveTask = createAction(
+  'SET_ACTIVE_TASK',
+  (task:Task) => ({task})
+)
+
+export const getActiveTaskById = createAction(
+  'GET_ACTIVE_TASK_BY_ID',
+  (id:string) => ({id})
+)
+
 
 
 

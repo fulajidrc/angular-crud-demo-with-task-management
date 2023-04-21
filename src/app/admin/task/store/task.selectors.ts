@@ -9,3 +9,8 @@ export const selectedTaskGroups = createSelector(
   selectTaskState,
   state => state.taskGroup
 )
+
+export const selectedActiveTask = createSelector(
+  selectTaskState,
+  state => state.activeTask
+)

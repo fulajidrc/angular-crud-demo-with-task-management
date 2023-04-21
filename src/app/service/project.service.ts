@@ -20,6 +20,11 @@ export class ProjectService {
     .pipe(map (response => response.data))
   }
 
+  getProjectByID(id:string):Observable<Project>{
+    return this.http.get<{data: Project}>(`${this.apiUrl}/projects/${id}`, environment.apiOption)
+    .pipe(map (response => response.data))
+  }
+
   addProject(category: Project):Observable<Project>{
     return this.http.post<{data: Project}>(`${this.apiUrl}/projects`, category, environment.apiOption)
     .pipe(map(response => response.data))

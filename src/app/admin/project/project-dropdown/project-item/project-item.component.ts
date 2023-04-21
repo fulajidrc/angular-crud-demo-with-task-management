@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { deleteProject, setSelectProject } from '../../store/project.actions';
 import { Project } from '../../store/project.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-item',
@@ -16,7 +17,8 @@ export class ProjectItemComponent {
   // @Output() selectProjectEmit:EventEmitter<Project> = new EventEmitter();
   constructor(
     private store:Store,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ){}
   editProject(){
     this.editProjectEmit.emit(this.project);
@@ -24,6 +26,7 @@ export class ProjectItemComponent {
 
   selectProject(){
     this.store.dispatch(setSelectProject(this.project))
+    this.router.navigate(['/project', this.project._id])
   }
 
   deleteProject(){

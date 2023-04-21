@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { logoutAction } from 'src/app/auth/store/auth.actions';
+import { User } from 'src/app/auth/store/auth.model';
 import { selectedAuthUser } from 'src/app/auth/store/auth.selectors';
 
 @Component({
@@ -11,6 +12,7 @@ import { selectedAuthUser } from 'src/app/auth/store/auth.selectors';
 export class HeaderComponent {
   @Input() opened: boolean = false
   @Output() toogleSidebarEvent = new EventEmitter<boolean>();
+  @Input() user!:User;
   user$ = this.store.select(selectedAuthUser)
   constructor(
     private store:Store

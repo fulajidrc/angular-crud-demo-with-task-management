@@ -1,6 +1,6 @@
 <mat-sidenav-container class="example-sidenav-container"
  style="height: 90vh;">
-    <mat-sidenav #snav [mode]="mobileQuery?.matches ? 'over' : 'side'"
+    <mat-sidenav *ngIf="user.role == 'admin' || user.role == 'superadmin'" #snav [mode]="mobileQuery?.matches ? 'over' : 'side'"
     [fixedInViewport]="mobileQuery?.matches" fixedTopGap="56" [(opened)]="opened">
         <mat-nav-list>
             <a mat-list-item [routerLink]="nav.route" routerLinkActive="active-link" *ngFor="let nav of fillerNav">

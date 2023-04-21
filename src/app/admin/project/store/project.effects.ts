@@ -6,11 +6,25 @@ import { Observable, EMPTY, of } from 'rxjs';
 import * as ProjectActions from './project.actions';
 import { Store } from '@ngrx/store';
 import { ProjectService } from 'src/app/service';
-import { selectedProject, selectedTaskGroups } from './project.selectors';
+import { selectedActiveProject, selectedProject, selectedTaskGroups } from './project.selectors';
 
 @Injectable()
 export class ProjectEffects {
 
+  // loadAdminUsers$ = createEffect(() => {
+  //   return this.actions$.pipe( 
+  //     ofType(ProjectActions.loadProjects),
+  //     withLatestFrom(this.store.select(selectedProject)),
+  //     switchMap(([action, projects])=>{
+  //       if(projects.length > 0){
+  //         return EMPTY;
+  //       }else{
+  //         return this.projectService.getProject()
+  //         .pipe(map(projects => ProjectActions.setProjects(projects)))
+  //       }
+  //     })
+  //   );
+  // });
 
   loadProjects$ = createEffect(() => {
     return this.actions$.pipe( 
@@ -85,6 +99,21 @@ export class ProjectEffects {
       )
     )
   )
+
+  getProjectById$ = createEffect(() => {
+    return this.actions$.pipe( 
+      ofType(ProjectActions.getProjectById),
+      withLatestFrom(this.store.select(selectedActiveProject)),
+      switchMap(([action, project])=>{
+        if(project){
+          return EMPTY;
+        }else{
+          return this.projectService.getProjectByID(action.id)
+          .pipe(map(projectData => ProjectActions.setSelectProject(projectData)))
+        }
+      })
+    );
+  });
 
   constructor(
     private actions$: Actions,

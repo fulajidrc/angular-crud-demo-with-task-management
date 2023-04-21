@@ -9,14 +9,16 @@ export interface UserState {
   pageUsers: User[],
   curruntPage: number,
   totalUsers:number,
-  user?: User
+  user?: User,
+  adminUsers: User[]
 }
 
 export const initialState: UserState = {
   users: [],
   pageUsers: [],
   curruntPage: 0,
-  totalUsers: 0
+  totalUsers: 0,
+  adminUsers: []
 };
 
 export const reducer = createReducer(
@@ -27,9 +29,6 @@ export const reducer = createReducer(
     ...state,
     users: users
   })),
-  on(UserActions.setUser, (state, {user})=> ({...state, user: user}))
-
-  // on(UserActions.loadUsersSuccess, (state, action) => state),
-  // on(UserActions.loadUsersFailure, (state, action) => state),
-
+  on(UserActions.setUser, (state, {user}) => ({...state, user: user})),
+  on(UserActions.setAdminUsers, (state, {users}) => ({...state, adminUsers: users}) )
 );

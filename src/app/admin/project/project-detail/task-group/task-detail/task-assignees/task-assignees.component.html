@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start start" >
+<div fxLayout="column" fxLayoutAlign="start start" *ngIf="task$ | async as task">
     <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
         <div>Assignee</div>
         <div>
@@ -14,7 +14,7 @@
               <mat-option *ngFor="let user of users$ | async" [value]="user._id">{{user.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-raised-button color="accent" (click)="taskAssignToUser()" *ngIf="assignUser">Assign</button>
+        <button mat-raised-button color="accent" (click)="taskAssignToUser(task)" *ngIf="assignUser">Assign</button>
 
 
 
@@ -22,6 +22,8 @@
             <mat-chip *ngFor="let user of task.assign_users">
               <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
               {{getUserName(user)}}
+
+              <mat-icon style="cursor: pointer;" fontIcon="close" (click)="unassignUser(user)"></mat-icon>
             </mat-chip>
         </mat-chip-listbox>
     </div>

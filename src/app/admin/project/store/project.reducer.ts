@@ -2,18 +2,21 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { TaskGroup } from '../../task/store/task-group.model';
 import * as ProjectActions from './project.actions';
 import { Project } from './project.model';
+import { User } from 'src/app/auth/store/auth.model';
 
 export const projectFeatureKey = 'project';
 
 export interface ProjectState {
   projects:Project[],
   project?:Project,
-  task_groups: TaskGroup[]
+  task_groups: TaskGroup[],
+  adminUsers:User[]
 }
 
 export const initialState: ProjectState = {
   projects: [],
-  task_groups: []
+  task_groups: [],
+  adminUsers: []
 };
 
 

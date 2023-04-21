@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { TaskGroup } from '../admin/task/store/task-group.model';
 import { Task } from '../admin/task/store/task.model';
+import { AssignUser } from '../admin/task/store/assign_users.model';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,22 @@ export class TaskService {
 
   sortTask(tasks:Task[]){
     return this.http.post<{data: Task}>(`${this.apiUrl}/tasks/sort-task`,tasks, environment.apiOption)
+    .pipe(map(response => response.data))
+  }
+
+  assignTask(assignTask:AssignUser){
+    return this.http.post<{data:AssignUser}>(`${this.apiUrl}/assign-tasks`, assignTask, environment.apiOption)
+    .pipe(map(response => response.data))
+  }
+
+
+  unAssignTask(id:string){
+    return this.http.delete<{data:AssignUser}>(`${this.apiUrl}/assign-tasks/${id}`, environment.apiOption)
+    .pipe(map(response => response.data))
+  }
+
+  getTaskById(id:string){
+    return this.http.get<{data:Task}>(`${this.apiUrl}/tasks/${id}`, environment.apiOption)
     .pipe(map(response => response.data))
   }
 }

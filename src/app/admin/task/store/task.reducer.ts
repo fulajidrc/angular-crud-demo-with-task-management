@@ -1,11 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { TaskGroup } from './task-group.model';
 import * as TaskActions from './task.actions';
+import { Task } from './task.model';
 
 export const taskFeatureKey = 'task';
 
 export interface TaskState {
-  taskGroup: TaskGroup[]
+  taskGroup: TaskGroup[],
+  activeTask?: Task,
 }
 
 export const initialState: TaskState = {
@@ -19,6 +21,11 @@ export const reducer = createReducer(
   on(TaskActions.setTasks, (state, {taskGroups}) => ({
     ...state,
     taskGroup: taskGroups
-  }))
+  })),
+  on(TaskActions.setActiveTask, (state, {task}) => ({
+    ...state,
+    activeTask: task
+  })),
+  
 
 );

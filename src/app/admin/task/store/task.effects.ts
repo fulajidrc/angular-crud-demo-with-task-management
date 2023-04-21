@@ -5,11 +5,12 @@ import { concatMap, map, switchAll, switchMap, withLatestFrom } from 'rxjs/opera
 import { Observable, EMPTY, of } from 'rxjs';
 import * as TaskActions from './task.actions';
 import { Store } from '@ngrx/store';
-import { selectedTaskGroups } from './task.selectors';
+import { selectedActiveTask, selectedTaskGroups } from './task.selectors';
 import { selectedTaskGroups as selectedProjectTaskGroup } from '../../project/store/project.selectors';
 import { AssignUserService, TaskService } from 'src/app/service';
 import { selectedActiveProject, selectedProject } from '../../project/store/project.selectors';
 import {setSelectProject, setTaskGroups} from '../../project/store/project.actions'
+import { setActiveTask } from './task.actions';
 @Injectable()
 export class TaskEffects {
 
@@ -114,7 +115,6 @@ export class TaskEffects {
         switchMap(([action, taskGroups]) => 
           this.taskService.updateTaskGroup(action.id, action.taskGroup)
           .pipe(map(task_group => {
-            console.log('updateTaskGroup' ,task_group);
              return  setTaskGroups(taskGroups.map(item => {
                 const itemData = item._id == action.id 
                 ? {...item, title: task_group.title, description: task_group.description}
@@ -153,28 +153,121 @@ export class TaskEffects {
                 const tasks = itemGroup.tasks.map(itemTask => {
                   if(itemTask._id == action.id){
                     const taskData = {...itemTask, title: task.title, description: task.description}
-                    console.log('task data',taskData);
                     return {...taskData};
                   }else{
                     return {...itemTask};
                   }
                 })
                 const taskGroup = {...itemGroup, tasks: tasks}
-                console.log('task group',taskGroup);
                 return {...taskGroup};
               }else{
                 return {...itemGroup};
               }
              })
-             console.log('updateTaskData effect',taskGroupData);
              return setTaskGroups(taskGroupData)
             }
           ))
         )
       )
   )
-
   
+  assignTaskToUser$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(TaskActions.assignUserToTask),
+        withLatestFrom(
+          this.store.select(selectedProjectTaskGroup),
+          this.store.select(selectedActiveTask)
+        ),
+        switchMap(([action, taskGroups, activeTask]) => 
+          this.taskService.assignTask(action.assignUser)
+          .pipe(switchMap(  assignUser => of(
+            setTaskGroups(taskGroups.map(itemGroup => {
+              const tasks = itemGroup.tasks.map(taskItem => {
+                if(taskItem._id == assignUser.task){
+                  return {...taskItem, assign_users: taskItem.assign_users 
+                      ? [...taskItem.assign_users, assignUser]
+                      : [assignUser]
+                  }
+                }else{
+                  return taskItem;
+                }
+                
+              })
+              return {...itemGroup, tasks: tasks};
+             })),
+             setActiveTask({
+              title: activeTask ? activeTask.title : '', 
+              _id: activeTask ? activeTask._id : '',
+              description: activeTask ? activeTask.description : '',
+              assign_users: activeTask 
+              ? activeTask.assign_users ? [...activeTask.assign_users, assignUser] : [assignUser]
+               : [], 
+               project: activeTask?.project,
+                task_group: activeTask?.task_group,
+                user: activeTask?.user,
+                index: activeTask?.index 
+             })
+          )
+          ))
+        )
+      )
+  )
+
+  unassignTaskToUser$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(TaskActions.unAssignUserToTask),
+        withLatestFrom(
+          this.store.select(selectedProjectTaskGroup),
+          this.store.select(selectedActiveTask)
+        ),
+        switchMap(([action, taskGroups, activeTask]) => 
+          this.taskService.unAssignTask(action.id)
+          .pipe(switchMap(assignUser => 
+            of(
+              setTaskGroups(taskGroups.map(itemGroup => {
+                const tasks = itemGroup.tasks.map(taskItem => {
+                  const assignUsers = taskItem.assign_users?.filter(assignUserData => assignUserData._id != action.id)
+                  return {...taskItem, assign_users: assignUsers}
+                })
+                return {...itemGroup, tasks: tasks};
+              })),
+              setActiveTask({
+                title: activeTask ? activeTask.title : '', 
+                _id: activeTask ? activeTask._id : '',
+                description: activeTask ? activeTask.description : '',
+                assign_users: activeTask 
+                ? activeTask.assign_users ? [...activeTask.assign_users.filter(item => action.id != item._id)] : []
+                : [], 
+                project: activeTask?.project,
+                task_group: activeTask?.task_group,
+                user: activeTask?.user,
+                index: activeTask?.index 
+              })
+            )
+          ))
+        )
+      )
+  )   
+  
+  getActiveTaskById$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(TaskActions.getActiveTaskById),
+        withLatestFrom(
+          this.store.select(selectedActiveTask)
+        ),
+        switchMap(([action,activeTask]) => {
+          if(activeTask){
+            return EMPTY;
+          }else{
+            return this.taskService.getTaskById(action.id)
+              .pipe(switchMap(  task => of(
+                setActiveTask(task)
+              )
+            ))
+          }
+        })
+      )
+  )
 
   constructor(
     private actions$: Actions,

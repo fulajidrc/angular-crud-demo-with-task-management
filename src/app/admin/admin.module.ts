@@ -77,10 +77,7 @@ const routes: Routes = [
     StoreModule.forFeature(fromProject.projectFeatureKey, fromProject.reducer),
     StoreModule.forFeature(fromTask.taskFeatureKey, fromTask.reducer),
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forFeature([CategoryEffects, ProjectEffects, TaskEffects, UserEffects]),
-
-    
-    // EffectsModule.forFeature([TaskEffects]),
+    EffectsModule.forFeature([CategoryEffects, ProjectEffects, TaskEffects, UserEffects])
   ],
   providers:[AuthGuard]
 })
